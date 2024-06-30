@@ -81,15 +81,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('输入框内容为空！');
             }
 
-            // 重置按钮文本和状态
-            var copyButtons = document.querySelectorAll('.markdown-container span');
-            copyButtons.forEach(function(button) {
+            // 重置所有复制按钮的文本和状态
+            var allCopyButtons = document.querySelectorAll('.markdown-container span');
+            allCopyButtons.forEach(function(button) {
                 button.textContent = '复制Markdown';
                 button.style.pointerEvents = 'auto'; // 允许按钮再次点击
             });
         }
     }, 1000); // 每1000毫秒检查一次是否生成了输入框元素
 });
+
 
 
 
