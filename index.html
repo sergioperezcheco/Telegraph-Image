@@ -2,7 +2,7 @@
 <html data-n-head-ssr>
   <script>
 
-// 等待整个文档加载完毕
+  // 等待整个文档加载完毕
 document.addEventListener('DOMContentLoaded', function() {
     // 等待输入框元素生成
     var waitForElement = setInterval(function() {
@@ -11,63 +11,31 @@ document.addEventListener('DOMContentLoaded', function() {
             // 输入框元素已经准备好，执行你的代码
             var url = inputElement.value.trim(); // 获取输入框的值
             if (url !== '') {
-                clearInterval(waitForElement); // 清除定时器
+              clearInterval(waitForElement); // 清除定时器
                 var altText = url.split('/').pop(); // 获取图片链接的最后一部分作为 Alt Text
                 var markdownImage = `![${altText}](${url})`;
                 console.log('生成的 Markdown 格式的图片链接：', markdownImage);
 
-                // 检查并删除已有的 Markdown 输入框和按钮
-                var existingMarkdownDiv = document.querySelector('.markdown-container');
-                if (existingMarkdownDiv) {
-                    existingMarkdownDiv.remove();
-                }
-
                 // 创建包含 Markdown 链接和复制文本按钮的新元素
                 var newDiv = document.createElement('div');
-                newDiv.classList.add('markdown-container');
-                newDiv.style.display = 'flex'; // 设置样式
-                newDiv.style.alignItems = 'center';
-                newDiv.style.marginBottom = '10px';
+                newDiv.classList.add('input-group'); // 添加一个类名（可选）
 
                 // 创建显示 Markdown 链接的文本框元素
                 var markdownInput = document.createElement('input');
                 markdownInput.setAttribute('type', 'text');
                 markdownInput.setAttribute('readonly', 'readonly');
                 markdownInput.value = markdownImage; // 将 Markdown 链接赋值给文本框
-                markdownInput.style.flexGrow = '1'; // 设置样式
-                markdownInput.style.marginRight = '10px';
-                markdownInput.style.padding = '5px';
-                markdownInput.style.border = '1px solid #ccc';
-                markdownInput.style.borderRadius = '4px';
+                markdownInput.classList.add('input-sm'); // 添加类名（可选）
 
                 // 创建复制文本按钮元素
-                var copyButton = document.createElement('span');
+                var copyButton = document.createElement('button');
                 copyButton.textContent = '复制Markdown';
-                copyButton.style.padding = '5px 10px'; // 设置样式
-                copyButton.style.backgroundColor = '#007bff';
-                copyButton.style.color = 'white';
-                copyButton.style.border = 'none';
-                copyButton.style.borderRadius = '4px';
-                copyButton.style.cursor = 'pointer';
                 copyButton.addEventListener('click', function() {
                     // 复制文本按钮的点击事件处理函数
                     markdownInput.select();
                     document.execCommand('copy');
-                    copyButton.textContent = '已复制';
-                    copyButton.style.pointerEvents = 'none'; // 禁用按钮点击
+                    alert('已复制Markdown');
                     console.log('已复制文本:', markdownInput.value);
-                    
-                    // 2秒后将按钮文本恢复为“复制Markdown”
-                    setTimeout(function() {
-                        copyButton.textContent = '复制Markdown';
-                        copyButton.style.pointerEvents = 'auto'; // 允许按钮再次点击
-                    }, 2000);
-                });
-                copyButton.addEventListener('mouseover', function() {
-                    copyButton.style.backgroundColor = '#0056b3'; // 悬停样式
-                });
-                copyButton.addEventListener('mouseout', function() {
-                    copyButton.style.backgroundColor = '#007bff'; // 恢复原样式
                 });
 
                 // 将 Markdown 输入框和复制文本按钮添加到新创建的 div 中
@@ -86,13 +54,6 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 console.error('输入框内容为空！');
             }
-
-            // 重置所有复制按钮的文本和状态
-            var allCopyButtons = document.querySelectorAll('.markdown-container span');
-            allCopyButtons.forEach(function(button) {
-                button.textContent = '复制Markdown';
-                button.style.pointerEvents = 'auto'; // 允许按钮再次点击
-            });
         }
     }, 1000); // 每1000毫秒检查一次是否生成了输入框元素
 });
