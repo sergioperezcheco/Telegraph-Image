@@ -2,16 +2,17 @@
 <html data-n-head-ssr>
   <script>
 
-// 等待整个文档加载完毕
 document.addEventListener('DOMContentLoaded', function() {
+    var previousUrl = ''; // 记录上一次的 URL
+
     // 等待输入框元素生成
     var waitForElement = setInterval(function() {
         var inputElement = document.getElementById('url-content');
         if (inputElement) {
             // 输入框元素已经准备好，执行你的代码
             var url = inputElement.value.trim(); // 获取输入框的值
-            if (url !== '') {
-                clearInterval(waitForElement); // 清除定时器
+            if (url !== '' && url !== previousUrl) { // 检查 URL 是否变化
+                previousUrl = url; // 更新记录的 URL
                 var altText = url.split('/').pop(); // 获取图片链接的最后一部分作为 Alt Text
                 var markdownImage = `![${altText}](${url})`;
                 console.log('生成的 Markdown 格式的图片链接：', markdownImage);
@@ -78,18 +79,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.error('未找到类名为 url-box 且 data-v-793b8fc8 属性为空的元素！');
                 }
             } else {
-                console.error('输入框内容为空！');
+                // 如果 URL 没有变化，重置按钮文本和状态
+                var copyButtons = document.querySelectorAll('.markdown-container span');
+                copyButtons.forEach(function(button) {
+                    button.textContent = '复制Markdown';
+                    button.style.pointerEvents = 'auto'; // 允许按钮再次点击
+                });
             }
-
-            // 重置所有复制按钮的文本和状态
-            var allCopyButtons = document.querySelectorAll('.markdown-container span');
-            allCopyButtons.forEach(function(button) {
-                button.textContent = '复制Markdown';
-                button.style.pointerEvents = 'auto'; // 允许按钮再次点击
-            });
         }
     }, 1000); // 每1000毫秒检查一次是否生成了输入框元素
 });
+
 
 
 
