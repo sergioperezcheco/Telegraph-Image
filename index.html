@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html data-n-head-ssr>
   <script>
@@ -11,31 +10,49 @@ document.addEventListener('DOMContentLoaded', function() {
             // 输入框元素已经准备好，执行你的代码
             var url = inputElement.value.trim(); // 获取输入框的值
             if (url !== '') {
-              clearInterval(waitForElement); // 清除定时器
+                clearInterval(waitForElement); // 清除定时器
                 var altText = url.split('/').pop(); // 获取图片链接的最后一部分作为 Alt Text
                 var markdownImage = `![${altText}](${url})`;
                 console.log('生成的 Markdown 格式的图片链接：', markdownImage);
 
                 // 创建包含 Markdown 链接和复制文本按钮的新元素
                 var newDiv = document.createElement('div');
-                newDiv.classList.add('input-group'); // 添加一个类名（可选）
+                newDiv.style.display = 'flex'; // 设置样式
+                newDiv.style.alignItems = 'center';
+                newDiv.style.marginBottom = '10px';
 
                 // 创建显示 Markdown 链接的文本框元素
                 var markdownInput = document.createElement('input');
                 markdownInput.setAttribute('type', 'text');
                 markdownInput.setAttribute('readonly', 'readonly');
                 markdownInput.value = markdownImage; // 将 Markdown 链接赋值给文本框
-                markdownInput.classList.add('input-sm'); // 添加类名（可选）
+                markdownInput.style.flexGrow = '1'; // 设置样式
+                markdownInput.style.marginRight = '10px';
+                markdownInput.style.padding = '5px';
+                markdownInput.style.border = '1px solid #ccc';
+                markdownInput.style.borderRadius = '4px';
 
                 // 创建复制文本按钮元素
-                var copyButton = document.createElement('button');
+                var copyButton = document.createElement('span');
                 copyButton.textContent = '复制Markdown';
+                copyButton.style.padding = '5px 10px'; // 设置样式
+                copyButton.style.backgroundColor = '#007bff';
+                copyButton.style.color = 'white';
+                copyButton.style.border = 'none';
+                copyButton.style.borderRadius = '4px';
+                copyButton.style.cursor = 'pointer';
                 copyButton.addEventListener('click', function() {
                     // 复制文本按钮的点击事件处理函数
                     markdownInput.select();
                     document.execCommand('copy');
                     alert('已复制Markdown');
                     console.log('已复制文本:', markdownInput.value);
+                });
+                copyButton.addEventListener('mouseover', function() {
+                    copyButton.style.backgroundColor = '#0056b3'; // 悬停样式
+                });
+                copyButton.addEventListener('mouseout', function() {
+                    copyButton.style.backgroundColor = '#007bff'; // 恢复原样式
                 });
 
                 // 将 Markdown 输入框和复制文本按钮添加到新创建的 div 中
@@ -57,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 1000); // 每1000毫秒检查一次是否生成了输入框元素
 });
+
 
 
   </script>
