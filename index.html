@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     markdownInput.select();
                     document.execCommand('copy');
                     copyButton.textContent = '已复制';
+                    copyButton.style.pointerEvents = 'none'; // 禁用按钮点击
                     console.log('已复制文本:', markdownInput.value);
                 });
                 copyButton.addEventListener('mouseover', function() {
@@ -79,9 +80,17 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 console.error('输入框内容为空！');
             }
+
+            // 重置按钮文本和状态
+            var copyButtons = document.querySelectorAll('.markdown-container span');
+            copyButtons.forEach(function(button) {
+                button.textContent = '复制Markdown';
+                button.style.pointerEvents = 'auto'; // 允许按钮再次点击
+            });
         }
     }, 1000); // 每1000毫秒检查一次是否生成了输入框元素
 });
+
 
 
 
