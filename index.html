@@ -2,6 +2,7 @@
 <html data-n-head-ssr>
   <script>
   // 等待整个文档加载完毕
+// 等待整个文档加载完毕
 document.addEventListener('DOMContentLoaded', function() {
     // 等待输入框元素生成
     var waitForElement = setInterval(function() {
@@ -45,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     // 复制文本按钮的点击事件处理函数
                     markdownInput.select();
                     document.execCommand('copy');
-                    alert('已复制Markdown');
+                    copyButton.textContent = '已复制';
                     console.log('已复制文本:', markdownInput.value);
                 });
                 copyButton.addEventListener('mouseover', function() {
@@ -74,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 1000); // 每1000毫秒检查一次是否生成了输入框元素
 });
+
 
 
 
