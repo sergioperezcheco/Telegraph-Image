@@ -102,9 +102,30 @@
                 });
             }
         }
+
+        // 模拟图片上传并更新 URL 输入框
+        function simulateImageUpload(url) {
+            var inputElement = document.getElementById('url-content');
+            inputElement.value = url;
+            var event = new Event('input');
+            inputElement.dispatchEvent(event);
+        }
+
+        // 模拟初始图片上传
+        simulateImageUpload('https://example.com/image1.png');
+
+        // 模拟后续图片上传
+        setTimeout(function() {
+            simulateImageUpload('https://example.com/image2.png');
+        }, 5000);
     });
   </script>
-
+  <body>
+    <div>
+        <input readonly="readonly" id="url-content" class="input-sm" type="text">
+    </div>
+    <div class="url-box" data-v-793b8fc8=""></div>
+  </body>
 
 
 
