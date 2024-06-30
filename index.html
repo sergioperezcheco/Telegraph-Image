@@ -89,10 +89,15 @@
                         button.style.pointerEvents = 'auto'; // 允许按钮再次点击
                     });
                 });
+
+                // 手动触发 input 事件以确保初始值被处理
+                var event = new Event('input');
+                inputElement.dispatchEvent(event);
             }
         }, 1000); // 每1000毫秒检查一次是否生成了输入框元素
     });
   </script>
+
 
 
 
