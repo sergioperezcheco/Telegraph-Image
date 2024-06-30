@@ -78,7 +78,7 @@
                     if (urlBoxElements.length > 0) {
                         // 获取第一个匹配的元素并在其之前插入新创建的 div
                         var urlBox = urlBoxElements[0];
-                        urlBox.parentNode.insertBefore(newDiv, urlBox);
+                        urlBox.parentNode.insertBefore(newDiv, urlBox.nextSibling); // 在 urlBox 元素之后插入新创建的 div
                     } else {
                         console.error('未找到类名为 url-box 且 data-v-793b8fc8 属性为空的元素！');
                     }
@@ -96,6 +96,7 @@
         }, 1000); // 每1000毫秒检查一次是否生成了输入框元素
     });
   </script>
+
 
 
 
