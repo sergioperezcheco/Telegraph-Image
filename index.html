@@ -2,6 +2,7 @@
 <html data-n-head-ssr>
   <script>
 
+// 等待整个文档加载完毕
 document.addEventListener('DOMContentLoaded', function() {
     // 等待输入框元素生成
     var waitForElement = setInterval(function() {
@@ -15,8 +16,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 var markdownImage = `![${altText}](${url})`;
                 console.log('生成的 Markdown 格式的图片链接：', markdownImage);
 
+                // 检查并删除已有的 Markdown 输入框和按钮
+                var existingMarkdownDiv = document.querySelector('.markdown-container');
+                if (existingMarkdownDiv) {
+                    existingMarkdownDiv.remove();
+                }
+
                 // 创建包含 Markdown 链接和复制文本按钮的新元素
                 var newDiv = document.createElement('div');
+                newDiv.classList.add('markdown-container');
                 newDiv.style.display = 'flex'; // 设置样式
                 newDiv.style.alignItems = 'center';
                 newDiv.style.marginBottom = '10px';
@@ -46,7 +54,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     markdownInput.select();
                     document.execCommand('copy');
                     copyButton.textContent = '已复制';
-                    copyButton.style.pointerEvents = 'none'; // 禁用按钮点击
                     console.log('已复制文本:', markdownInput.value);
                 });
                 copyButton.addEventListener('mouseover', function() {
@@ -55,6 +62,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 copyButton.addEventListener('mouseout', function() {
                     copyButton.style.backgroundColor = '#007bff'; // 恢复原样式
                 });
+
+                // 将 Markdown 输入框和复制文本按钮添加到新创建的 div 中
+                newDiv.appendChild(markdownInput);
+                newDiv.appendChild(copyButton);
 
                 // 获取要插入新元素的位置（通过类名获取元素）
                 var urlBoxElements = document.querySelectorAll('.url-box[data-v-793b8fc8=""]');
@@ -71,6 +82,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 1000); // 每1000毫秒检查一次是否生成了输入框元素
 });
+
+
 
 
 
