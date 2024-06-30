@@ -3,13 +3,20 @@
   <script>
     // 等待整个文档加载完毕
     document.addEventListener('DOMContentLoaded', function() {
-        // 获取输入框元素
+        // 监听输入框的值变化
         var inputElement = document.getElementById('url-content');
-        
-        // 如果输入框元素存在，则添加事件监听器
         if (inputElement) {
-            // 定义更新 Markdown 输出框的函数
-            function updateMarkdownOutput() {
+            inputElement.addEventListener('input', function() {
+                updateMarkdownLink();
+            });
+        }
+
+        // 初始调用一次以生成初始的 Markdown 链接
+        updateMarkdownLink();
+
+        function updateMarkdownLink() {
+            var inputElement = document.getElementById('url-content');
+            if (inputElement) {
                 var url = inputElement.value.trim(); // 获取输入框的值
                 if (url !== '') {
                     var altText = url.split('/').pop(); // 获取图片链接的最后一部分作为 Alt Text
@@ -94,17 +101,10 @@
                     button.style.pointerEvents = 'auto'; // 允许按钮再次点击
                 });
             }
-
-            // 初始调用一次函数以处理页面加载时的情况
-            updateMarkdownOutput();
-
-            // 添加输入框变化事件监听器
-            inputElement.addEventListener('input', updateMarkdownOutput);
-        } else {
-            console.error('未找到 id 为 url-content 的输入框元素！');
         }
     });
   </script>
+
 
 
 
