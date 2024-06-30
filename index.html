@@ -3,6 +3,7 @@
   <script>
   // 等待整个文档加载完毕
 // 等待整个文档加载完毕
+// 等待整个文档加载完毕
 document.addEventListener('DOMContentLoaded', function() {
     // 等待输入框元素生成
     var waitForElement = setInterval(function() {
@@ -47,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     markdownInput.select();
                     document.execCommand('copy');
                     copyButton.textContent = '已复制';
+                    copyButton.style.pointerEvents = 'none'; // 禁用按钮点击
                     console.log('已复制文本:', markdownInput.value);
                 });
                 copyButton.addEventListener('mouseover', function() {
@@ -55,10 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 copyButton.addEventListener('mouseout', function() {
                     copyButton.style.backgroundColor = '#007bff'; // 恢复原样式
                 });
-
-                // 将 Markdown 输入框和复制文本按钮添加到新创建的 div 中
-                newDiv.appendChild(markdownInput);
-                newDiv.appendChild(copyButton);
 
                 // 获取要插入新元素的位置（通过类名获取元素）
                 var urlBoxElements = document.querySelectorAll('.url-box[data-v-793b8fc8=""]');
@@ -75,7 +73,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 1000); // 每1000毫秒检查一次是否生成了输入框元素
 });
-
 
 
 
