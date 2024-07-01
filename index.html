@@ -17,9 +17,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 var markdownImage = `![${altText}](${url})`;
                 console.log('生成的 Markdown 格式的图片链接：', markdownImage);
 
+                // 移除之前生成的所有输入框和按钮
+                var previousDivs = document.querySelectorAll('.generated-markdown');
+                previousDivs.forEach(function(div) {
+                    div.remove();
+                });
+
                 // 创建包含 Markdown 链接和复制文本按钮的新元素
                 var newDiv = document.createElement('div');
-                newDiv.classList.add('input-group'); // 添加一个类名（可选）
+                newDiv.classList.add('input-group', 'generated-markdown'); // 添加一个类名（可选）
 
                 // 创建显示 Markdown 链接的文本框元素
                 var markdownInput = document.createElement('input');
@@ -73,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, 1000); // 每1000毫秒检查一次是否生成了输入框元素
 });
   </script>
+
 
 
   <head>
