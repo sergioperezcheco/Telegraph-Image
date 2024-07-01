@@ -5,44 +5,71 @@
 document.addEventListener('DOMContentLoaded', function() {
     var lastInputValue = ''; // 用于存储上一次输入框的值
     var timer; // 用于存储定时器的引用
-  
+
     // 等待输入框元素生成
     var waitForElement = setInterval(function() {
         var inputElement = document.getElementById('url-content');
         if (inputElement) {
-            // 输入框元素已经准备好，执行你的代码
             var url = inputElement.value.trim(); // 获取输入框的值
-            if (url !== lastInputValue) {
+            if (url !== '' && url !== lastInputValue) {
+                lastInputValue = url; // 更新上一次输入框的值
+
                 var altText = url.split('/').pop(); // 获取图片链接的最后一部分作为 Alt Text
                 var markdownImage = `![${altText}](${url})`;
                 console.log('生成的 Markdown 格式的图片链接：', markdownImage);
 
-                // 移除之前生成的所有输入框和按钮
-                var previousDivs = document.querySelectorAll('.generated-markdown');
-                previousDivs.forEach(function(div) {
-                    div.remove();
-                });
+                // 检查并删除已有的 Markdown 输入框和按钮
+                var existingMarkdownDiv = document.querySelector('.markdown-container');
+                if (existingMarkdownDiv) {
+                    existingMarkdownDiv.remove();
+                }
 
                 // 创建包含 Markdown 链接和复制文本按钮的新元素
                 var newDiv = document.createElement('div');
-                newDiv.classList.add('input-group', 'generated-markdown'); // 添加一个类名（可选）
+                newDiv.classList.add('markdown-container');
+                newDiv.style.display = 'flex'; // 设置样式
+                newDiv.style.alignItems = 'center';
+                newDiv.style.marginBottom = '10px';
 
                 // 创建显示 Markdown 链接的文本框元素
                 var markdownInput = document.createElement('input');
                 markdownInput.setAttribute('type', 'text');
                 markdownInput.setAttribute('readonly', 'readonly');
                 markdownInput.value = markdownImage; // 将 Markdown 链接赋值给文本框
-                markdownInput.classList.add('input-sm'); // 添加类名（可选）
+                markdownInput.style.flexGrow = '1'; // 设置样式
+                markdownInput.style.marginRight = '10px';
+                markdownInput.style.padding = '5px';
+                markdownInput.style.border = '1px solid #ccc';
+                markdownInput.style.borderRadius = '4px';
 
                 // 创建复制文本按钮元素
-                var copyButton = document.createElement('button');
+                var copyButton = document.createElement('span');
                 copyButton.textContent = '复制Markdown';
+                copyButton.style.padding = '5px 10px'; // 设置样式
+                copyButton.style.backgroundColor = '#007bff';
+                copyButton.style.color = 'white';
+                copyButton.style.border = 'none';
+                copyButton.style.borderRadius = '4px';
+                copyButton.style.cursor = 'pointer';
                 copyButton.addEventListener('click', function() {
                     // 复制文本按钮的点击事件处理函数
                     markdownInput.select();
                     document.execCommand('copy');
-                    alert('已复制Markdown');
+                    copyButton.textContent = '已复制';
+                    copyButton.style.pointerEvents = 'none'; // 禁用按钮点击
                     console.log('已复制文本:', markdownInput.value);
+                    
+                    // 2秒后将按钮文本恢复为“复制Markdown”
+                    setTimeout(function() {
+                        copyButton.textContent = '复制Markdown';
+                        copyButton.style.pointerEvents = 'auto'; // 允许按钮再次点击
+                    }, 2000);
+                });
+                copyButton.addEventListener('mouseover', function() {
+                    copyButton.style.backgroundColor = '#0056b3'; // 悬停样式
+                });
+                copyButton.addEventListener('mouseout', function() {
+                    copyButton.style.backgroundColor = '#007bff'; // 恢复原样式
                 });
 
                 // 将 Markdown 输入框和复制文本按钮添加到新创建的 div 中
@@ -58,12 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     console.error('未找到类名为 url-box 且 data-v-793b8fc8 属性为空的元素！');
                 }
-            } else {
-                console.error('输入框内容为空！');
             }
-
-            // 更新上一次输入框的值为当前值
-            lastInputValue = url;
 
             // 如果定时器存在，则清除定时器
             if (timer) {
