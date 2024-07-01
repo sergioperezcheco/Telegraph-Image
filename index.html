@@ -60,22 +60,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     copyButton.textContent = '已复制';
                     copyButton.style.pointerEvents = 'none'; // 禁用按钮点击
                     console.log('已复制文本:', markdownInput.value);
-
-                    // 修改 .text-area 中的文字
-                    var textAreaElement = document.querySelector('.text-area span');
-                    if (textAreaElement) {
-                        textAreaElement.textContent = '已成功复制图片Markdown地址！';
-                    }
-
+                    
                     // 2秒后将按钮文本恢复为“复制Markdown”
                     setTimeout(function() {
                         copyButton.textContent = '复制Markdown';
                         copyButton.style.pointerEvents = 'auto'; // 允许按钮再次点击
-
-                        // 恢复 .text-area 中的文字
-                        if (textAreaElement) {
-                            textAreaElement.textContent = '复制下面的图片地址 或者 取消重新上传';
-                        }
                     }, 2000);
                 });
                 copyButton.addEventListener('mouseover', function() {
