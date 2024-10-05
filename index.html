@@ -41,52 +41,87 @@
 
                     var uuidPrefix = generateUUIDPrefix(); // 生成 UUID 前缀
                     var markdownImage = `![${uuidPrefix}](${url})`;
+                    var htmlImage = `<img src="${url}" alt="${uuidPrefix}">`;
                     console.log('生成的 Markdown 格式的图片链接：', markdownImage);
+                    console.log('生成的 HTML 格式的图片链接：', htmlImage);
 
-                    // 检查并删除已有的 Markdown 输入框和按钮
-                    var existingMarkdownDiv = document.querySelector('.markdown-container');
-                    if (existingMarkdownDiv) {
-                        existingMarkdownDiv.remove();
+                    // 检查并删除已有的 Markdown 和 HTML 输入框及按钮
+                    var existingContainer = document.querySelector('.output-container');
+                    if (existingContainer) {
+                        existingContainer.remove();
                     }
 
-                    // 创建包含 Markdown 链接和复制文本按钮的新元素
+                    // 创建包含 Markdown 和 HTML 链接及复制按钮的新元素
                     var newDiv = document.createElement('div');
-                    newDiv.classList.add('markdown-container');
-                    newDiv.style.display = 'flex'; // 设置样式
-                    newDiv.style.alignItems = 'center';
-                    newDiv.style.marginBottom = '10px';
+                    newDiv.classList.add('output-container');
+                    newDiv.style.marginBottom = '20px';
 
-                    // 创建显示 Markdown 链接的文本框元素
+                    // 创建 Markdown 部分
+                    var markdownDiv = document.createElement('div');
+                    markdownDiv.style.display = 'flex';
+                    markdownDiv.style.alignItems = 'center';
+                    markdownDiv.style.marginBottom = '10px';
+
                     var markdownInput = document.createElement('input');
                     markdownInput.setAttribute('type', 'text');
                     markdownInput.setAttribute('readonly', 'readonly');
-                    markdownInput.value = markdownImage; // 将 Markdown 链接赋值给文本框
-                    markdownInput.style.flexGrow = '1'; // 设置样式
+                    markdownInput.value = markdownImage;
+                    markdownInput.style.flexGrow = '1';
                     markdownInput.style.marginRight = '10px';
                     markdownInput.style.padding = '5px';
                     markdownInput.style.border = '1px solid #ccc';
                     markdownInput.style.borderRadius = '4px';
 
-                    // 创建 Font Awesome 图标按钮元素
-                    var copyButton = document.createElement('i');
-                    copyButton.className = 'fab fa-markdown';
-                    copyButton.style.fontSize = '24px';
-                    copyButton.style.color = '#007bff';
-                    copyButton.style.cursor = 'pointer';
-                    copyButton.style.minWidth = '24px'; // 设置最小宽度
-                    copyButton.style.textAlign = 'center'; // 居中文字
-                    copyButton.onclick = function() {
-                        copyToClipboard(markdownImage, copyButton);
+                    var markdownButton = document.createElement('i');
+                    markdownButton.className = 'fab fa-markdown';
+                    markdownButton.style.fontSize = '24px';
+                    markdownButton.style.color = '#007bff';
+                    markdownButton.style.cursor = 'pointer';
+                    markdownButton.style.minWidth = '24px';
+                    markdownButton.style.textAlign = 'center';
+                    markdownButton.onclick = function() {
+                        copyToClipboard(markdownImage, markdownButton);
                     };
 
-                    // 将 Markdown 输入框和复制文本按钮添加到新创建的 div 中
-                    newDiv.appendChild(markdownInput);
-                    newDiv.appendChild(copyButton);
+                    markdownDiv.appendChild(markdownInput);
+                    markdownDiv.appendChild(markdownButton);
+
+                    // 创建 HTML 部分
+                    var htmlDiv = document.createElement('div');
+                    htmlDiv.style.display = 'flex';
+                    htmlDiv.style.alignItems = 'center';
+
+                    var htmlInput = document.createElement('input');
+                    htmlInput.setAttribute('type', 'text');
+                    htmlInput.setAttribute('readonly', 'readonly');
+                    htmlInput.value = htmlImage;
+                    htmlInput.style.flexGrow = '1';
+                    htmlInput.style.marginRight = '10px';
+                    htmlInput.style.padding = '5px';
+                    htmlInput.style.border = '1px solid #ccc';
+                    htmlInput.style.borderRadius = '4px';
+
+                    var htmlButton = document.createElement('i');
+                    htmlButton.className = 'fas fa-code';
+                    htmlButton.style.fontSize = '24px';
+                    htmlButton.style.color = '#007bff';
+                    htmlButton.style.cursor = 'pointer';
+                    htmlButton.style.minWidth = '24px';
+                    htmlButton.style.textAlign = 'center';
+                    htmlButton.onclick = function() {
+                        copyToClipboard(htmlImage, htmlButton);
+                    };
+
+                    htmlDiv.appendChild(htmlInput);
+                    htmlDiv.appendChild(htmlButton);
+
+                    // 添加 Markdown 和 HTML 部分到新创建的 div
+                    newDiv.appendChild(markdownDiv);
+                    newDiv.appendChild(htmlDiv);
 
                     // 获取要插入新元素的位置（通过类名获取元素）
                     var urlBoxElements = document.querySelectorAll('.url-box[data-v-793b8fc8=""]');
                     if (urlBoxElements.length > 0) {
-                        // 获取第一个匹配的元素并在其之前插入新创建的 div
                         var urlBox = urlBoxElements[0];
                         urlBox.parentNode.insertBefore(newDiv, urlBox);
                     } else {
