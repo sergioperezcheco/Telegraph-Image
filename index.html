@@ -1,5 +1,9 @@
 <!doctype html>
 <html data-n-head-ssr>
+  <head>
+    <!-- 引入 Font Awesome 的 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
   <body>
     <script>
     // 等待整个文档加载完毕
@@ -12,6 +16,19 @@
             return ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
                 (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
             ).slice(0, 8);
+        }
+
+        // 复制到剪贴板的函数
+        function copyToClipboard(text, element) {
+            navigator.clipboard.writeText(text).then(() => {
+                element.style.color = 'green'; // 变为绿色
+                console.log('已复制文本:', text);
+
+                // 2秒后将按钮颜色恢复为蓝色
+                setTimeout(function() {
+                    element.style.color = '#007bff'; // 恢复原样式
+                }, 2000);
+            });
         }
 
         // 等待输入框元素生成
@@ -50,28 +67,17 @@
                     markdownInput.style.border = '1px solid #ccc';
                     markdownInput.style.borderRadius = '4px';
 
-                    // 创建 SVG 图标按钮元素
-                    var copyButton = document.createElement('span');
-                    copyButton.innerHTML = `
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="#007bff">
-                            <path d="M5 3a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2H5zm0 2h14v14H5V5zm2 3v8h2V8H7zm4 0v8h2V8h-2zm4 0v8h2V8h-2z"/>
-                        </svg>
-                    `; // SVG 图标
+                    // 创建 Font Awesome 图标按钮元素
+                    var copyButton = document.createElement('i');
+                    copyButton.className = 'fab fa-markdown';
+                    copyButton.style.fontSize = '24px';
+                    copyButton.style.color = '#007bff';
                     copyButton.style.cursor = 'pointer';
                     copyButton.style.minWidth = '24px'; // 设置最小宽度
                     copyButton.style.textAlign = 'center'; // 居中文字
-                    copyButton.addEventListener('click', function() {
-                        // 复制文本按钮的点击事件处理函数
-                        markdownInput.select();
-                        document.execCommand('copy');
-                        copyButton.querySelector('svg').style.fill = 'green'; // 变为绿色
-                        console.log('已复制文本:', markdownInput.value);
-                        
-                        // 2秒后将按钮颜色恢复为蓝色
-                        setTimeout(function() {
-                            copyButton.querySelector('svg').style.fill = '#007bff'; // 恢复原样式
-                        }, 2000);
-                    });
+                    copyButton.onclick = function() {
+                        copyToClipboard(markdownImage, copyButton);
+                    };
 
                     // 将 Markdown 输入框和复制文本按钮添加到新创建的 div 中
                     newDiv.appendChild(markdownInput);
