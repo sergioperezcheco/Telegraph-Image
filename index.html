@@ -1,9 +1,5 @@
 <!doctype html>
 <html data-n-head-ssr>
-  <head>
-    <!-- 引入 Font Awesome 图标库 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/libs/font-awesome/6.0.0/css/all.min.css">
-  </head>
   <body>
     <script>
     // 等待整个文档加载完毕
@@ -54,9 +50,9 @@
                     markdownInput.style.border = '1px solid #ccc';
                     markdownInput.style.borderRadius = '4px';
 
-                    // 创建 Markdown 图标按钮元素
-                    var copyButton = document.createElement('i');
-                    copyButton.classList.add('fa', 'fa-markdown');
+                    // 创建复制文本的图标按钮元素（使用 Unicode 字符）
+                    var copyButton = document.createElement('span');
+                    copyButton.innerHTML = '&#x1F4CB;'; // 使用剪贴板图标
                     copyButton.style.fontSize = '24px';
                     copyButton.style.color = '#007bff';
                     copyButton.style.cursor = 'pointer';
