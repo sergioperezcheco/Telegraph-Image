@@ -24,10 +24,10 @@
                 element.style.color = 'green'; // 变为绿色
                 console.log('已复制文本:', text);
 
-                // 2秒后将按钮颜色恢复为蓝色
+                // 1.5秒后将按钮颜色恢复为黑色
                 setTimeout(function() {
-                    element.style.color = '#007bff'; // 恢复原样式
-                }, 2000);
+                    element.style.color = 'black'; // 恢复原样式
+                }, 1500);
             });
         }
 
@@ -75,7 +75,7 @@
                     var markdownButton = document.createElement('i');
                     markdownButton.className = 'fab fa-markdown';
                     markdownButton.style.fontSize = '24px';
-                    markdownButton.style.color = '#007bff';
+                    markdownButton.style.color = 'black';
                     markdownButton.style.cursor = 'pointer';
                     markdownButton.style.minWidth = '24px';
                     markdownButton.style.textAlign = 'center';
@@ -104,7 +104,7 @@
                     var htmlButton = document.createElement('i');
                     htmlButton.className = 'fas fa-code';
                     htmlButton.style.fontSize = '24px';
-                    htmlButton.style.color = '#007bff';
+                    htmlButton.style.color = 'black';
                     htmlButton.style.cursor = 'pointer';
                     htmlButton.style.minWidth = '24px';
                     htmlButton.style.textAlign = 'center';
